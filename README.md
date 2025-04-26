@@ -1,4 +1,5 @@
-# Chrome Extension Template （更适合中国宝宝的谷歌开发模板）
+# Chrome Extension Template
+>（一个更适合中国宝宝的谷歌开发模板）
 
 ## 目录
 
