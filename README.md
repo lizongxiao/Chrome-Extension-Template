@@ -1,4 +1,4 @@
-# Chrome Extension Template
+# Chrome Extension Template （更适合中国宝宝的谷歌开发模板）
 
 ## 目录
 
@@ -280,4 +280,4 @@ ISC
 
 ---
 
-通过遵循这个文档中的指导，你应该能够有效地使用这个模板开发 Chrome 扩展，享受热重载带来的开发便利。
+开源拯救世界
