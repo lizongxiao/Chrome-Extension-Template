@@ -1,0 +1,30 @@
+{
+  "name": "chrome-extension-template",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "node scripts/dev.js",
+    "watch": "vite build --watch",
+    "build": "vite build",
+    "build-dev-scripts": "node scripts/build-dev-scripts.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "Chrome extension using Vue 3 with Composition API",
+  "dependencies": {
+    "@vitejs/plugin-vue": "^4.2.3",
+    "vite": "^4.4.0",
+    "vue": "^3.5.13"
+  },
+  "devDependencies": {
+    "@crxjs/vite-plugin": "^2.0.0-beta.18",
+    "@types/chrome": "^0.0.237",
+    "@types/node": "^20.11.27",
+    "chokidar": "^3.5.3",
+    "esbuild": "^0.18.11",
+    "rimraf": "^5.0.5",
+    "typescript": "^5.0.2",
+    "ws": "^8.13.0"
+  }
+}
