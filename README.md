@@ -1,6 +1,6 @@
-# Chrome Extension Template
+# Chrome 扩展开发模板（干净但丰富）
 
-> （一个更适合中国宝宝的谷歌开发模板）
+> 一个更适合中国开发者的 Chrome 扩展开发模板
 
 ## 目录
 
@@ -17,7 +17,15 @@
 
 ## 简介
 
-这是一个基于 Vue 3 的 Chrome 扩展开发模板，提供了热重载功能，使开发 Chrome 扩展更加高效。该模板实现了在开发过程中自动检测文件变更，并通过 WebSocket 通知扩展重新加载，无需手动刷新，大大提高了开发效率。
+这是一个基于 Vue 3 的 Chrome 扩展开发模板，提供了完整的开发环境和热重载功能，使 Chrome 扩展开发更加高效。该模板特别适合中国开发者，解决了许多常见的开发痛点。
+
+模板核心优势：
+- **开发效率提升** - 无需手动刷新，文件修改后自动重载扩展
+- **现代化架构** - 基于 Vue 3 和 TypeScript 的完整前端开发体验
+- **标准化结构** - 符合 Chrome 扩展最佳实践的项目架构
+- **便捷的构建流程** - 一键开发和生产环境构建
+
+该模板通过 WebSocket 实现了实时检测文件变更并通知扩展重新加载的机制，大大提高了开发效率。
 
 ## 特性
 
@@ -42,6 +50,22 @@
 ```
 chrome-extension-template/
 ├── dist/                  # 编译输出目录
+│   ├── assets/            # 构建后的资源文件
+│   ├── background/        # 构建后的后台脚本
+│   ├── content/           # 构建后的内容脚本
+│   ├── options/           # 构建后的选项页面
+│   ├── popup/             # 构建后的弹出窗口
+│   ├── shared/            # 共享编译资源
+│   ├── src/               # 源代码构建输出
+│   │   ├── assets/        # 资源文件
+│   │   ├── dev/           # 热重载脚本
+│   │   │   ├── background-dev.js  # 后台热重载脚本
+│   │   │   └── content-dev.js     # 内容脚本热重载
+│   │   ├── options/       # 选项页面构建
+│   │   └── popup/         # 弹出窗口构建
+│   ├── background-wrapper.js  # 后台脚本包装器
+│   ├── manifest.json      # 修改后的扩展清单文件
+│   └── service-worker-loader.js  # Service Worker 加载器
 ├── public/                # 静态资源
 ├── scripts/               # 开发和构建脚本
 │   ├── build-dev-scripts.js  # 开发脚本构建工具
@@ -54,15 +78,25 @@ chrome-extension-template/
 │   ├── components/        # Vue 组件
 │   ├── content/           # 内容脚本
 │   ├── dev/               # 热重载开发脚本
-│   │   ├── background-dev.ts  # 后台热重载脚本
-│   │   ├── constants.ts   # 热重载常量
-│   │   └── content-dev.ts # 内容脚本热重载
+│   │   └── constants.ts   # 热重载常量
+│   ├── options/           # 选项页面
 │   ├── popup/             # 弹出窗口
+│   │   ├── components/    # 弹出窗口组件
+│   │   ├── App.vue        # 弹出窗口主组件
+│   │   ├── index.html     # 弹出窗口HTML入口
+│   │   ├── main.ts        # 弹出窗口入口脚本
+│   │   └── style.css      # 弹出窗口样式
 │   ├── utils/             # 工具函数
-│   └── manifest.json      # 扩展清单文件
-├── vite.config.ts         # Vite 配置
+│   ├── index.html         # 主HTML入口
+│   ├── manifest.json      # 扩展清单文件
+│   └── shims-vue.d.ts     # Vue类型声明
+├── .gitignore             # Git忽略配置
+├── .vscode/               # VSCode配置
 ├── package.json           # 项目配置
-└── README.md              # 项目文档
+├── pnpm-lock.yaml         # pnpm锁定文件
+├── tsconfig.json          # TypeScript配置
+├── tsconfig.node.json     # Node的TypeScript配置
+└── vite.config.ts         # Vite 配置
 ```
 
 ## 安装
@@ -124,13 +158,21 @@ pnpm dev
 3. **后台脚本处理器** - 接收重载指令并重新加载扩展
 4. **构建流程集成** - 自动将热重载脚本注入到构建过程中
 
-当文件变更时：
+热重载流程：
 
-- Vite 构建系统检测到变化并重新构建
-- WebSocket 服务器发送更新通知(`UPDATE_CONTENT`消息)
-- 内容脚本接收通知并发送消息(`RELOAD`消息)给后台脚本
+- 开发服务器（`scripts/dev-server.js`）启动 WebSocket 监听端口 8787
+- 热重载脚本（`dist/src/dev/content-dev.js` 和 `dist/src/dev/background-dev.js`）在扩展中加载
+- 当文件变更时，Vite 构建系统检测到变化并重新构建
+- WebSocket 服务器发送更新通知（`UPDATE_CONTENT` 消息）
+- 内容脚本接收通知并发送消息（`RELOAD` 消息）给后台脚本
 - 后台脚本调用 `chrome.runtime.reload()` 重新加载扩展
-- 页面自动刷新以加载更新后的扩展
+- 活动页面自动刷新以应用更新后的扩展
+
+热重载相关文件：
+- `scripts/dev-server.js` - WebSocket 服务器实现
+- `scripts/build-dev-scripts.js` - 编译热重载脚本
+- `scripts/modify-manifest.js` - 修改 manifest 以支持热重载
+- `src/dev/constants.ts` - 定义热重载使用的消息类型和常量
 
 ## 脚本说明
 
