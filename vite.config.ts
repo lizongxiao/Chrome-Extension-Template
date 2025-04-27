@@ -23,6 +23,8 @@ export default defineConfig({
         "**/dist/**",
         "C:/DumpStack.log.tmp",
         "**/DumpStack.log.tmp",
+        "C:\\DumpStack.log.tmp",
+        "**\\DumpStack.log.tmp",
       ],
     },
   },
@@ -30,6 +32,16 @@ export default defineConfig({
     outDir: "dist",
     emptyOutDir: true,
     rollupOptions: {
+      watch: {
+        exclude: [
+          "**/node_modules/**",
+          "**/dist/**",
+          "C:/DumpStack.log.tmp",
+          "**/DumpStack.log.tmp",
+          "C:\\DumpStack.log.tmp",
+          "**\\DumpStack.log.tmp",
+        ],
+      },
       output: {
         chunkFileNames: (chunk) => {
           const moduleId = chunk.facadeModuleId || "";
