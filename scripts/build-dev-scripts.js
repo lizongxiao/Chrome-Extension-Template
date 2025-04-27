@@ -34,7 +34,7 @@ async function buildDevScripts() {
     }
 
     // 检查constants.ts文件是否存在
-    const constantsFile = resolve(__dirname, '../src/dev/constants.ts');
+    const constantsFile = resolve(__dirname, '../dev/constants.ts');
     if (!fs.existsSync(constantsFile)) {
       console.error('🔴 constants.ts文件不存在，请先运行开发服务器 ');
       process.exit(1);
@@ -42,7 +42,7 @@ async function buildDevScripts() {
 
     // 编译background-dev.ts - 后台服务脚本
     await build({
-      entryPoints: [resolve(__dirname, '../src/dev/background-dev.ts')],
+      entryPoints: [resolve(__dirname, '../dev/background-dev.ts')],
       outfile: resolve(outputDir, 'background-dev.js'),
       bundle: true,       // 将所有依赖打包到一个文件
       minify: false,      // 不压缩代码，便于调试
@@ -59,7 +59,7 @@ async function buildDevScripts() {
 
     // 编译content-dev.ts - 内容脚本
     await build({
-      entryPoints: [resolve(__dirname, '../src/dev/content-dev.ts')],
+      entryPoints: [resolve(__dirname, '../dev/content-dev.ts')],
       outfile: resolve(outputDir, 'content-dev.js'),
       bundle: true,
       minify: false,

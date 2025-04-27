@@ -18,6 +18,8 @@ import { WebSocketServer } from 'ws';
 const PORT = 8787;
 const UPDATE_CONTENT = 'UPDATE_CONTENT';
 const EXTENSION_NAME = 'web-update-alerts';
+// 客户端已连接仅通知一次
+let clientConnected = false;
 
 /**
  * 创建HTTP服务器
@@ -66,7 +68,10 @@ async function startDevServer() {
 
   // 处理WebSocket连接
   wss.on('connection', (ws) => {
-    console.log('🚀 客户端已连接 ');
+    if (!clientConnected) {
+      console.log('🚀 客户端已连接 ');
+      clientConnected = true;
+    }
     socket = ws;
 
     // 处理客户端消息
